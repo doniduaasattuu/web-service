@@ -1,0 +1,108 @@
+openapi: '3.0.1'
+info:
+  title: 'Members RESTful API Docs'
+  version: '1.0'
+  contact:
+    name: 'Doni Darmawan'
+    url: 'https://donidarmawan.com'
+    email: 'doni.duaasattuu@gmail.com'
+  license:
+    name: 'APACHE 2.0'
+    url: 'https://www.apache.org/licences/LICENCE-2.0'
+servers:
+  - url: http://localhost:8080/
+paths:
+  /members:
+    get: 
+      summary: 'Get all member'
+      description: 'Get all registered member by default'
+      responses:
+        200:
+          description: 'OK'
+    post:
+      summary: 'Create new member'
+      description: 'Create new member to database'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                nama_member: 
+                  type: 'string'
+                  minLength: 3
+                  maxLength: 40
+                email:
+                  type: 'string'
+                  minLength: 5
+                  maxLength: 35
+                no_telp:
+                  type: 'string'
+                  minLength: 11
+                  maxLength: 16
+              required:
+                - nama_member
+                - email
+                - no_telp
+      responses:
+        201:
+          description: 'Member created successfully'
+
+  /members/{memberId}:
+    get:
+      summary: 'Get member by id'
+      description: 'Get registered member by id'
+      parameters:
+        - name: memberId
+          in: path
+          required: true
+          description: 'Member ID for query get'
+          schema: 
+            type: number
+      responses:
+        200:
+          description: 'OK'
+        404:
+          description: 'No users were found'
+    patch:           
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: memberId
+          in: path
+          required: true
+          description: 'Member ID for query update'
+          schema: 
+            type: number
+      summary: 'Update member id'
+      description: 'Update registered member'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {}
+      responses:
+        200:
+          description: 'Member updated successfully'
+        404:
+          description: 'No users were found'
+    delete:
+      summary: 'Delete member by id'    
+      parameters:
+        - name: memberId
+          in: path
+          required: true
+          description: 'Member ID for query delete'
+          schema: 
+            type: number
+      description: 'Delete member from database'
+      responses:
+        200:
+          description: 'Member deleted successfully'
+        404:
+          description: 'Member already deleted'       
+    

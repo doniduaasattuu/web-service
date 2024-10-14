@@ -144,6 +144,6 @@ class Members extends ResourceController
             return $this->respondDeleted('Member deleted successfully');
         }
 
-        return $this->respondDeleted('Member already deleted');
+        return $this->failNotFound('Member already deleted');
     }
 }
